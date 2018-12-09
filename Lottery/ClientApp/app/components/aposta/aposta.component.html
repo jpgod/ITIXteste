@@ -1,0 +1,60 @@
+﻿<h3>Apostar Mega Sena</h3>
+<hr />
+
+<form [formGroup]="apostaForm" (ngSubmit)="save()" #formDir="ngForm" novalidate>
+    <div class="alert alert-danger alert-dismissible col-md-8" *ngIf="errorMessage != ''" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            <li *ngFor="let item of errorMessage">{{item}}</li>
+        </ul>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-12">Nome</label>
+        <div class="col-md-4">
+            <input class="form-control" type="text" [formControl]="nameCtrl">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-md-3">Aposta Automática</label>
+        <button type="button" class="btn btn-info btn-sm " (click)="toggle()">{{isAutomatic ? 'Sim' : 'Não'}}</button>
+    </div>
+
+    <div class="form-group row" *ngIf="!isAutomatic">
+        <label class="control-label col-md-12" for="Gender">Aposta</label>
+        <div class="col-md-4">
+            <input class="form-control" type="text" mask="00-00" [formControl]="apostaCtrl">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Apostar</button>
+        <button type="reset" class="btn" (click)="reset()">Limpar</button>
+    </div>
+
+    <hr />
+    <h3>Lista das ultimas 50 apostas registradas</h3>
+    <hr />
+
+    <table class='table' *ngIf="apostaList">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Números Apostados</th>
+                <th>Data/Hora da aposta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of apostaList">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.combinations }}</td>
+                <td>{{ item.timeStamp }}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>  

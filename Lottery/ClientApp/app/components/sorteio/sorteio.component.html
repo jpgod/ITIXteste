@@ -1,0 +1,55 @@
+﻿<h3>Apostar Mega Sena</h3>
+<hr />
+
+<form [formGroup]="apostaForm" (ngSubmit)="sortear()" #formDir="ngForm" novalidate>
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible col-md-8" *ngIf="errorMessage != ''"  role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <ul>
+                <li *ngFor="let item of errorMessage">{{item}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Sortear!</button>
+        <button type="button" class="btn" (click)="reset()">Novo Sorteio</button>
+    </div>
+
+    <div class="row" *ngIf="sorteado != ''">
+        <div class="alert alert-success col-md-8" role="alert">
+            <h6>Números Sorteados: {{ sorteado }}, total de acertos: {{apostaList?.length}}</h6>
+        </div>
+    </div>
+
+    <div *ngIf="sorteado != ''">
+        <hr />
+        <h3>Lista de apostas ganhadoras</h3>
+        <hr />
+
+        <table class='table' *ngIf="apostaList">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Números Acertados</th>
+                    <th>Números Errados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of apostaList">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.acertos }}</td>
+                    <td>{{ item.erros }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="apostaList?.length === 0 && sorteado != ''">
+        <h4>Nenhuma aposta acertou pelo menos 4 números</h4>
+
+    </div>
+</form>  
